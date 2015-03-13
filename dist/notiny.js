@@ -1,0 +1,1 @@
+!function(n){n.fn.notiny=function(t,e){n.extend({},e)}}(jQuery);
