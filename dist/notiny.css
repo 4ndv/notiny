@@ -1,39 +1,194 @@
-.notiny-container {
-  position: fixed;
+.notiny-container,
+.notiny-wrapper,
+.notiny-content-img,
+.notiny-content-text {
+  margin: 0;
+  padding: 0;
 }
 
-.notiny-wrapper {
-  display: none;
+.notiny-wrapper a {
+  outline: 0;
+}
+
+.notiny-container {
+  position: fixed;
+  z-index: 9998;
 }
 
 .notiny-content {
-  margin: 0;
+  table-layout: fixed;
   padding: 3px 3px;
   margin-bottom: 2px;
   margin-top: 2px;
-  min-height: 32px;
   border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
 }
 
-.notiny-content .notiny-content-img {
-  margin: 0;
-  padding: 0;
-  float: left;
+.notiny-content td {
+  vertical-align: top;
+}
+
+.notiny-content-img {
   border-radius: 2px;
   width: 32px;
   height: 32px;
-  display: inline-block;
 }
 
-.notiny-content .notiny-content-text {
+.notiny-content-text {
   font-family: sans-serif;
   font-size: 0.8em;
-  margin: 0;
-  padding: 0;
-  padding-top: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   padding-left: 3px;
   padding-right: 3px;
+  display: block;
   overflow: hidden;
+}
+
+/* Animations */
+
+@-webkit-keyframes notiny-animation-hide {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  30% {
+    -webkit-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  90% {
+
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes notiny-animation-hide {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  30% {
+    -webkit-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+  }
+
+  90% {
+
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@-webkit-keyframes notiny-animation-show {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+    max-height: -50px;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+    max-height: 500px;
+  }
+
+  90% {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+  }
+
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes notiny-animation-show {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+    max-height: -50px;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  50% {
+    -webkit-transform: scale(1.5, 1.5);
+    transform: scale(1.5, 1.5);
+    max-height: 500px;
+  }
+
+  90% {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+  }
+
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@-webkit-keyframes notiny-animation-hover {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1);
+  }
+}
+
+@keyframes notiny-animation-hover {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1);
+  }
 }
 
 .notiny-theme-dark {
