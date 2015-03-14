@@ -9,7 +9,6 @@
   position: fixed;
   z-index: 9998;
 }
-.notiny-wrapper {}
 .notiny-content {
   table-layout: fixed;
   padding: 3px 3px;
@@ -19,7 +18,6 @@
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  display: block;
 }
 .notiny-content td {
   vertical-align: top;

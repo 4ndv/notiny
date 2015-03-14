@@ -7,6 +7,7 @@
 <h2>Notiny test</h2>
 <button id="top-right">Top Right</button><button id="top-left">Top Left</button>
 <button id="bottom-right">Bottom Right</button><button id="bottom-right-2">Bottom Right With Image</button>
+<button id="bottom-right-noa">Bottom Right No Animation</button>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script>
 $(document).ready( function() {
@@ -17,6 +18,9 @@ $(document).ready( function() {
   });
   $("#bottom-right-2").click(function(){
     $.notiny("KEK and veryveryvery long and long and long and long and long text", { image: 'http://i2.kym-cdn.com/photos/images/original/000/802/377/ce6.jpg' });
+  });
+  $("#bottom-right-noa").click(function(){
+    $.notiny("KEK and veryveryvery long and long and long and long and long text", { animate: false });
   });
   $("#top-right").click(function(){
     $.notiny("Top Right", { y: 'top' });

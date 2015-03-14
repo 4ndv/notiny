@@ -18,7 +18,7 @@
     // Autohide delay
     delay: 3000,
     // Enable animations
-    animate: true
+    animate: true,
     // Cuts long text strings
     strip: true,
     // Show animation string
@@ -152,42 +152,52 @@
     var closing = false;
 
     var closeAction = function() {
-      if (!closing) {
-        closing = true;
-        if (isAnimationSupported) {
-          notification.css('animation', settings.animation_hide);
-          setTimeout(function() {
-            wrapper.remove();
-          }, 550);
-        } else {
-          // Fallback for old browsers
-          wrapper.fadeOut(400, function() {
-            wrapper.remove();
-          });
+      if (settings.animate) {
+        if (!closing) {
+          closing = true;
+          if (isAnimationSupported) {
+            notification.css('animation', settings.animation_hide);
+            setTimeout(function() {
+              wrapper.remove();
+            }, 550);
+          } else {
+            // Fallback for old browsers
+            wrapper.fadeOut(400, function() {
+              wrapper.remove();
+            });
+          }
         }
+      } else {
+        wrapper.remove();
       }
     };
 
     var showAction = function() {
-      if (isAnimationSupported) {
-        notification.css('animation', settings.animation_show);
-      } else {
-        // Fallback for old browsers
-        wrapper.fadeIn(500);
+      if (settings.animate) {
+        if (isAnimationSupported) {
+          notification.css('animation', settings.animation_show);
+        } else {
+          // Fallback for old browsers
+          wrapper.fadeIn(500);
+        }
       }
     };
 
     showAction();
 
-    notification.click(function() {
-      closeAction();
-      return false;
-    })
+    if (settings.clickhide) {
+      notification.click(function() {
+        closeAction();
+        return false;
+      });
+    }
 
-    setTimeout(function() {
-      closeAction();
-      // + half second from show animation
-    }, settings.delay + 500);
+    if (settings.autohide) {
+      setTimeout(function() {
+        closeAction();
+        // + half second from show animation
+      }, settings.delay + 500);
+    }
   };
 
   $.fn.notiny = function(text, options) {
