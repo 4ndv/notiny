@@ -2,15 +2,14 @@
   margin: 0;
   padding: 0;
 }
-
+.notiny-wrapper a {
+  outline: 0;
+}
 .notiny-container {
   position: fixed;
+  z-index: 9998;
 }
-
-.notiny-wrapper {
-  display: none;
-}
-
+.notiny-wrapper {}
 .notiny-content {
   table-layout: fixed;
   padding: 3px 3px;
@@ -19,29 +18,77 @@
   min-height: 32px;
   border-radius: 2px;
   overflow: hidden;
+  position: relative;
+  cursor: pointer;
 }
-
 .notiny-content td {
   vertical-align: top;
 }
-
-.notiny-content .notiny-content-img {
+.notiny-content-img {
   border-radius: 2px;
   width: 32px;
   height: 32px;
 }
-
-.notiny-content .notiny-content-text {
+.notiny-content-text {
   font-family: sans-serif;
   font-size: 0.8em;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   padding-left: 3px;
   padding-right: 3px;
   display: block;
   overflow: hidden;
 }
 
+/* Animations */
+
+@keyframes notiny-animation-hide {
+  0% {
+    transform: scale(1, 1);
+  }
+  20% {
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1.5, 1.5);
+  }
+  90% {
+  }
+  100% {
+    opacity: 0;
+    filter: blur(2px);
+    transform: scale(1, 1);
+  }
+}
+@keyframes notiny-animation-show {
+  0% {
+    opacity: 0;
+    transform: scale(1, 1);
+    filter: blur(3px);
+  }
+  5% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5, 1.5);
+
+  }
+  90% {
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+@keyframes notiny-animation-hover {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  100% {
+    transform: scale(1.1, 1.1);
+  }
+}
 .notiny-theme-dark {
   background-color: #202020;
   color: #f5f5f5;
