@@ -1,76 +1,114 @@
 (function($) {
-  var g_settings = {};
-
   var defaults = {
     image: undefined,
-    position: 'bottom right',
-    theme: 'light',
-    width: '300px',
+    x: 'right',
+    y: 'bottom',
+    theme: 'dark',
+    width: '300',
+    background: true,
+    delay: 3000,
     strip: true
   };
 
-  var parsePosition = function() {
-    var newpos = [];
-    var x,y = false;
-    var args = g_settings.position.split(' ');
-
-    for(var i = 0; i<args.length; i++) {
-      if(!x) {
-        if(args[i] === 'left' || args[i] === 'right') {
-          x = true;
-          newpos.push(args[i]);
-          g_settings.float = args[i];
-        }
-      }
-
-      if(!y) {
-        if(args[i] === 'top' || args[i] === 'bottom') {
-          y = true;
-          newpos.push(args[i]);
-        }
-      }
+  var checkPosition = function(g_settings) {
+    if(g_settings.x !== 'left' && g_settings.x !== 'right') {
+      g_settings.x = 'right';
+    }
+    if(g_settings.y !== 'top' && g_settings.y !== 'bottom') {
+      g_settings.y = 'bottom';
     }
 
-    if(!x) {
-      newpos.push('right');
-    }
-
-    if(!y) {
-      newpos.push('bottom');
-    }
-
-    g_settings.position = newpos.join(' ');
+    return g_settings;
   };
 
   var createNotification = function(text, options) {
     var elem = $('body');
-    g_settings = $.extend(defaults, options);
+    console.log(defaults);
+    var settings = $.extend({}, defaults);
+    $.extend(settings, options);
+    console.log(defaults);
     // Parse and verify position string
-    parsePosition();
-
+    settings = checkPosition(settings);
     // Local copy of settings
-    var settings = g_settings;
 
-    // Creating container
-    var containerId = 'notiny-container-' + settings.position_y + '-' + settings.position_x;
-    if ($('#' + containerId).length == 0) {
-      var container = $('<div/>', {
-        class: 'notiny-container',
-        id: containerId,
-        text: 'test'
-      });
-
-      container.css(settings.position_x, 0);
-      container.css(settings.position_y, 0);
-    }
-
-    elem.append(container);
+    // Wrapper
+    var wrapper = $('<div/>', {
+      class: 'notiny-wrapper'
+    });
 
     // Creating notification
-    var notificationClass = 'notify-wrapper-' + settings.theme;
-    var notification = $('<div/>', {
-      class: notificationClass + ' notify-wrapper'
+    var notification = $('<table/>', {
+      class: 'notiny-theme-' + settings.theme + ' notiny-content'
     });
+
+    var texttd = $('<td/>');
+
+    var ptext = $('<p/>', {
+      class: 'notiny-content-text'
+    });
+
+    // Strip
+    if(settings.strip) {
+      ptext.css('white-space', 'nowrap');
+      ptext.css('text-overflow', 'ellipsis');
+    }
+
+    if(settings.image !== undefined && settings.background && !settings.strip) {
+      ptext.css('padding-top', '0px');
+    }
+
+    // Image
+    if(settings.image !== undefined) {
+      var imgtd = $('<td/>');
+
+      var img = $('<img/>', {
+        src: settings.image,
+        class: 'notiny-content-img'
+      });
+
+      imgtd.css('width', img.width());
+
+      ptext.css('padding-left', '6px');
+
+      imgtd.append(img);
+      notification.prepend(imgtd);
+    }
+
+    // Width
+    notification.css('width', settings.width);
+
+    // Float
+    notification.css('float', settings.x);
+    notification.css('clear', settings.x);
+
+    ptext.html(text);
+
+    texttd.append(ptext);
+    notification.append(texttd);
+
+    // Creating container
+    var container = undefined;
+    var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
+    if ($('#' + containerId).length == 0) {
+      container = $('<div/>', {
+        class: 'notiny-container',
+        id: containerId,
+      });
+
+      container.css(settings.x, 10);
+      container.css(settings.y, 10);
+
+      elem.append(container);
+    } else {
+      container = $('#' + containerId);
+    }
+
+    wrapper.append(notification);
+
+    container.prepend(wrapper);
+    wrapper.fadeIn(500);
+
+    setTimeout(function(){wrapper.fadeOut(500);}, settings.delay);
   };
 
   $.fn.notiny = function(text, options) {

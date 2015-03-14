@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>Notiny test</title>
+<meta charset="utf-8" />
 </head>
 <body>
 <h2>Notiny test</h2>
@@ -8,14 +9,13 @@
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script>
 $(document).ready( function() {
+  var i = 0;
   $("#bottom-right").click(function(){
-    $.notiny("Hello world", {
-      position: 'left top'
-    });
-    
-    $.notiny("Hello world", {
-      position: 'right top'
-    });
+    $.notiny("Hello world " + i);
+    i++;
+    $.notiny("KEK and veryveryvery long and long and long and long and long text", { delay: 1200000, image: 'http://i2.kym-cdn.com/photos/images/original/000/802/377/ce6.jpg' });
+    $.notiny("100px", { delay: 1200000, width: '100px' });
+    $.notiny("Without background", { delay: 1200000, width: 'auto', theme: 'light', image: 'http://i2.kym-cdn.com/photos/images/original/000/802/377/ce6.jpg', background: false });
   });
 });
 </script>
