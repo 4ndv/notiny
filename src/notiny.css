@@ -15,11 +15,11 @@
   padding: 3px 3px;
   margin-bottom: 2px;
   margin-top: 2px;
-  min-height: 32px;
   border-radius: 2px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  display: block;
 }
 .notiny-content td {
   vertical-align: top;
@@ -65,13 +65,14 @@
     opacity: 0;
     transform: scale(1, 1);
     filter: blur(3px);
+    max-height: -50px;
   }
   5% {
     opacity: 1;
   }
   50% {
     transform: scale(1.5, 1.5);
-
+    max-height: 500px;
   }
   90% {
     filter: blur(0px);

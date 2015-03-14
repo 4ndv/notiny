@@ -1,13 +1,30 @@
 (function($) {
   var defaults = {
+    // Image path (http/base64)
     image: undefined,
+    // Position on screen
     x: 'right',
     y: 'bottom',
+    // Theme
     theme: 'dark',
+    // css width
     width: '300',
+    // Display background or not, if false, background: transparent;
     background: true,
+    // Hide automatically
+    autohide: true,
+    // Hide by click
+    clickhide: true,
+    // Autohide delay
     delay: 3000,
-    strip: true
+    // Enable animations
+    animate: true
+    // Cuts long text strings
+    strip: true,
+    // Show animation string
+    animation_show: 'notiny-animation-show 0.4s forwards',
+    // Hide animation string
+    animation_hide: 'notiny-animation-hide 0.5s forwards'
   };
 
   // https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations/Detecting_CSS_animation_support
@@ -138,7 +155,7 @@
       if (!closing) {
         closing = true;
         if (isAnimationSupported) {
-          notification.css('animation', 'notiny-animation-hide 0.5s forwards');
+          notification.css('animation', settings.animation_hide);
           setTimeout(function() {
             wrapper.remove();
           }, 550);
@@ -153,7 +170,7 @@
 
     var showAction = function() {
       if (isAnimationSupported) {
-        notification.css('animation', 'notiny-animation-show 0.4s forwards');
+        notification.css('animation', settings.animation_show);
       } else {
         // Fallback for old browsers
         wrapper.fadeIn(500);
