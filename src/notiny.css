@@ -7,33 +7,26 @@
 }
 .notiny-container {
   position: fixed;
-  z-index: 9998;
+  z-index: 9999;
 }
 .notiny-content {
-  table-layout: fixed;
   padding: 3px 3px;
-  margin-bottom: 2px;
-  margin-top: 2px;
+  margin: 2px 0px;
   border-radius: 2px;
-  overflow: hidden;
-  position: relative;
   cursor: pointer;
-}
-.notiny-content td {
-  vertical-align: top;
+  min-height: 32px;
 }
 .notiny-content-img {
+  display: block;
   border-radius: 2px;
   width: 32px;
   height: 32px;
+  float: left;
 }
 .notiny-content-text {
   font-family: sans-serif;
   font-size: 0.8em;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding: 8px 5px 6px 5px;
   display: block;
   overflow: hidden;
 }
@@ -48,7 +41,7 @@
     opacity: 1;
   }
   30% {
-    transform: scale(1.5, 1.5);
+    transform: scale(1.2, 1.2);
   }
   90% {
   }
@@ -63,14 +56,12 @@
     opacity: 0;
     transform: scale(1, 1);
     filter: blur(3px);
-    max-height: -50px;
   }
   5% {
     opacity: 1;
   }
   50% {
-    transform: scale(1.5, 1.5);
-    max-height: 500px;
+    transform: scale(1.2, 1.2);
   }
   90% {
     filter: blur(0px);

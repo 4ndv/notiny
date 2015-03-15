@@ -80,13 +80,13 @@
     });
 
     // Creating notification
-    var notification = $('<table/>', {
+    var notification = $('<div/>', {
       class: 'notiny-theme-' + settings.theme + ' notiny-content'
     });
 
-    var texttd = $('<td/>');
+    //var texttd = $('<td/>');
 
-    var ptext = $('<p/>', {
+    var ptext = $('<div/>', {
       class: 'notiny-content-text'
     });
 
@@ -102,9 +102,9 @@
 
     // Image
     if (settings.image !== undefined) {
-      var imgtd = $('<td/>', {
-        class: 'notiny-content-img'
-      });
+      //var imgtd = $('<td/>', {
+      //  class: 'notiny-content-img'
+      //});
 
       var img = $('<img/>', {
         src: settings.image,
@@ -113,8 +113,8 @@
 
       ptext.css('padding-left', '6px');
 
-      imgtd.append(img);
-      notification.prepend(imgtd);
+      //imgtd.append(img);
+      notification.prepend(img);
     }
 
     // Width
@@ -126,8 +126,8 @@
 
     ptext.html(text);
 
-    texttd.append(ptext);
-    notification.append(texttd);
+    //texttd.append(ptext);
+    notification.append(ptext);
 
     // Creating container
     var container = undefined;
