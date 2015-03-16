@@ -107,7 +107,7 @@
     return g_settings;
   };
 
-  var closeAction = function() {
+  var closeAction = function(notification, settings) {
     if (settings.animate) {
       if (!closing) {
         closing = true;
@@ -128,7 +128,7 @@
     }
   };
 
-  var showAction = function() {
+  var showAction = function(notification, settings) {
     if (settings.animate) {
       if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
         notification.css('animation', settings.animation_show);
@@ -139,7 +139,17 @@
     }
   };
 
-  var createContainerAndAppend = function(notification) {
+  var prepareNotification = function(text, options) {
+    var settings = $.extend({}, defaults);
+    $.extend(settings, options);
+    // Parse and verify position string
+    settings = checkPosition(settings);
+    settings.curr_theme = themes[settings.theme];
+
+    createNotification(text, settings);
+  };
+
+  var createContainerAndAppend = function(notification, settings) {
     var elem = $('body');
 
     // Creating container
@@ -147,7 +157,7 @@
     var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
     if ($('#' + containerId).length === 0) {
       container = $('<div/>', {
-        class: 'notiny-container ' + curr_theme.container_class,
+        class: 'notiny-container ' + settings.curr_theme.container_class,
         id: containerId,
       });
 
@@ -167,7 +177,7 @@
 
     var closing = false;
 
-    showAction();
+    showAction(notification, settings);
 
     if (settings.clickhide) {
       notification.click(function() {
@@ -179,24 +189,22 @@
 
     if (settings.autohide) {
       setTimeout(function() {
-        closeAction();
+        closeAction(notification, settings);
         // + half second from show animation
       }, settings.delay + 500);
     }
   };
 
   var createNotification = function(text, settings) {
-    var curr_theme = themes[settings.theme];
-
     // Creating notification
     var notification = $('<div/>', {
-      class: 'notiny-notification ' + curr_theme.notification_class
+      class: 'notiny-notification ' + settings.curr_theme.notification_class
     });
 
     //var texttd = $('<td/>');
 
     var ptext = $('<div/>', {
-      class: 'notiny-notification-text ' + curr_theme.text_class
+      class: 'notiny-notification-text ' + settings.curr_theme.text_class
     });
 
     // Strip
@@ -213,7 +221,7 @@
     if (settings.image !== undefined) {
       var img = $('<img/>', {
         src: settings.image,
-        class: 'notiny-notification-img ' + curr_theme.image_class
+        class: 'notiny-notification-img ' + settings.curr_theme.image_class
       });
 
       ptext.css('padding-left', '6px');
@@ -232,20 +240,11 @@
 
     notification.append(ptext);
 
-    createContainerAndAppend(notification);
-  };
-
-  var prepareNotification = function(text, options) {
-    var settings = $.extend({}, defaults);
-    $.extend(settings, options);
-    // Parse and verify position string
-    settings = checkPosition(settings);
-
-    createNotification(text, settings);
+    createContainerAndAppend(notification, settings);
   };
 
   $.notiny = function(text, options) {
-    createNotification(text, options);
+    prepareNotification(text, options);
     return this;
   };
 }(jQuery));

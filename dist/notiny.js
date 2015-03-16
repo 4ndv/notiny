@@ -94,7 +94,7 @@
       }
     }
     return feature;
-  }
+  };
 
   var checkPosition = function(g_settings) {
     if (g_settings.x !== 'left' && g_settings.x !== 'right') {
@@ -107,66 +107,57 @@
     return g_settings;
   };
 
-  var createNotification = function(text, options) {
-    var elem = $('body');
+  var closeAction = function(notification, settings) {
+    if (settings.animate) {
+      if (!closing) {
+        closing = true;
+        if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
+          notification.css('animation', settings.animation_hide);
+          setTimeout(function() {
+            notification.remove();
+          }, 550);
+        } else {
+          // Fallback for old browsers
+          notification.fadeOut(400, function() {
+            notification.remove();
+          });
+        }
+      }
+    } else {
+      notification.remove();
+    }
+  };
 
+  var showAction = function(notification, settings) {
+    if (settings.animate) {
+      if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
+        notification.css('animation', settings.animation_show);
+      } else {
+        // Fallback for old browsers
+        notification.fadeIn(500);
+      }
+    }
+  };
+
+  var prepareNotification = function(text, options) {
     var settings = $.extend({}, defaults);
     $.extend(settings, options);
     // Parse and verify position string
     settings = checkPosition(settings);
+    settings.curr_theme = themes[settings.theme];
 
-    var curr_theme = themes[settings.theme];
+    createNotification(text, settings);
+  };
 
-    // Creating notification
-    var notification = $('<div/>', {
-      class: 'notiny-notification ' + curr_theme.notification_class
-    });
-
-    //var texttd = $('<td/>');
-
-    var ptext = $('<div/>', {
-      class: 'notiny-notification-text ' + curr_theme.text_class
-    });
-
-    // Strip
-    if (settings.strip) {
-      ptext.css('white-space', 'nowrap');
-      ptext.css('text-overflow', 'ellipsis');
-    }
-
-    if (settings.image !== undefined && settings.background && !settings.strip) {
-      ptext.css('padding-top', '0px');
-    }
-
-    // Image
-    if (settings.image !== undefined) {
-      var img = $('<img/>', {
-        src: settings.image,
-        class: 'notiny-notification-img ' + curr_theme.image_class
-      });
-
-      ptext.css('padding-left', '6px');
-
-      notification.prepend(img);
-    }
-
-    // Width
-    notification.css('width', settings.width);
-
-    // Float
-    notification.css('float', settings.x);
-    notification.css('clear', settings.x);
-
-    ptext.html(text);
-
-    notification.append(ptext);
+  var createContainerAndAppend = function(notification, settings) {
+    var elem = $('body');
 
     // Creating container
     var container;
     var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
     if ($('#' + containerId).length === 0) {
       container = $('<div/>', {
-        class: 'notiny-container ' + curr_theme.container_class,
+        class: 'notiny-container ' + settings.curr_theme.container_class,
         id: containerId,
       });
 
@@ -186,39 +177,7 @@
 
     var closing = false;
 
-    var closeAction = function() {
-      if (settings.animate) {
-        if (!closing) {
-          closing = true;
-          if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-            notification.css('animation', settings.animation_hide);
-            setTimeout(function() {
-              notification.remove();
-            }, 550);
-          } else {
-            // Fallback for old browsers
-            notification.fadeOut(400, function() {
-              notification.remove();
-            });
-          }
-        }
-      } else {
-        notification.remove();
-      }
-    };
-
-    var showAction = function() {
-      if (settings.animate) {
-        if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-          notification.css('animation', settings.animation_show);
-        } else {
-          // Fallback for old browsers
-          notification.fadeIn(500);
-        }
-      }
-    };
-
-    showAction();
+    showAction(notification, settings);
 
     if (settings.clickhide) {
       notification.click(function() {
@@ -230,14 +189,62 @@
 
     if (settings.autohide) {
       setTimeout(function() {
-        closeAction();
+        closeAction(notification, settings);
         // + half second from show animation
       }, settings.delay + 500);
     }
   };
 
+  var createNotification = function(text, settings) {
+    // Creating notification
+    var notification = $('<div/>', {
+      class: 'notiny-notification ' + settings.curr_theme.notification_class
+    });
+
+    //var texttd = $('<td/>');
+
+    var ptext = $('<div/>', {
+      class: 'notiny-notification-text ' + settings.curr_theme.text_class
+    });
+
+    // Strip
+    if (settings.strip) {
+      ptext.css('white-space', 'nowrap');
+      ptext.css('text-overflow', 'ellipsis');
+    }
+
+    if (settings.image !== undefined && settings.background && !settings.strip) {
+      ptext.css('padding-top', '0px');
+    }
+
+    // Image
+    if (settings.image !== undefined) {
+      var img = $('<img/>', {
+        src: settings.image,
+        class: 'notiny-notification-img ' + settings.curr_theme.image_class
+      });
+
+      ptext.css('padding-left', '6px');
+
+      notification.prepend(img);
+    }
+
+    // Width
+    notification.css('width', settings.width);
+
+    // Float
+    notification.css('float', settings.x);
+    notification.css('clear', settings.x);
+
+    ptext.html(text);
+
+    notification.append(ptext);
+
+    createContainerAndAppend(notification, settings);
+  };
+
   $.notiny = function(text, options) {
-    createNotification(text, options);
+    prepareNotification(text, options);
     return this;
   };
 }(jQuery));
