@@ -1,6 +1,8 @@
 Notiny
 ========
 
+[![Code Climate](https://codeclimate.com/github/andreyviktorov/notiny/badges/gpa.svg)](https://codeclimate.com/github/andreyviktorov/notiny)
+
 Ultra-small jquery notification plugin
 
 ## Usage

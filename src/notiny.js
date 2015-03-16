@@ -162,9 +162,10 @@
     notification.append(ptext);
 
     // Creating container
+    var container;
     var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
     if ($('#' + containerId).length === 0) {
-      var container = $('<div/>', {
+      container = $('<div/>', {
         class: 'notiny-container ' + curr_theme.container_class,
         id: containerId,
       });
@@ -174,10 +175,10 @@
 
       elem.append(container);
     } else {
-      var container = $('#' + containerId);
+      container = $('#' + containerId);
     }
 
-    if (settings.y == 'top') {
+    if (settings.y === 'top') {
       container.prepend(notification);
     } else {
       container.append(notification);
