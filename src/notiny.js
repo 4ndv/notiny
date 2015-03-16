@@ -109,8 +109,8 @@
 
   var closeAction = function(notification, settings) {
     if (settings.animate) {
-      if (!closing) {
-        closing = true;
+      if (!settings._state_closing) {
+        settings._state_closing = true;
         if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
           notification.css('animation', settings.animation_hide);
           setTimeout(function() {
@@ -144,7 +144,7 @@
     $.extend(settings, options);
     // Parse and verify position string
     settings = checkPosition(settings);
-    settings.curr_theme = themes[settings.theme];
+    settings._curr_theme = themes[settings.theme];
 
     createNotification(text, settings);
   };
@@ -157,7 +157,7 @@
     var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
     if ($('#' + containerId).length === 0) {
       container = $('<div/>', {
-        class: 'notiny-container ' + settings.curr_theme.container_class,
+        class: 'notiny-container ' + settings._curr_theme.container_class,
         id: containerId,
       });
 
@@ -175,7 +175,7 @@
       container.append(notification);
     }
 
-    var closing = false;
+    settings._state_closing = false;
 
     showAction(notification, settings);
 
@@ -198,13 +198,13 @@
   var createNotification = function(text, settings) {
     // Creating notification
     var notification = $('<div/>', {
-      class: 'notiny-notification ' + settings.curr_theme.notification_class
+      class: 'notiny-notification ' + settings._curr_theme.notification_class
     });
 
     //var texttd = $('<td/>');
 
     var ptext = $('<div/>', {
-      class: 'notiny-notification-text ' + settings.curr_theme.text_class
+      class: 'notiny-notification-text ' + settings._curr_theme.text_class
     });
 
     // Strip
@@ -221,7 +221,7 @@
     if (settings.image !== undefined) {
       var img = $('<img/>', {
         src: settings.image,
-        class: 'notiny-notification-img ' + settings.curr_theme.image_class
+        class: 'notiny-notification-img ' + settings._curr_theme.image_class
       });
 
       ptext.css('padding-left', '6px');
