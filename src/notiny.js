@@ -27,32 +27,74 @@
     animation_hide: 'notiny-animation-hide 0.5s forwards'
   };
 
-  // https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations/Detecting_CSS_animation_support
-  var isAnimationSupported = function() {
-    var animation = false,
-      animationstring = 'animation',
-      keyframeprefix = '',
-      domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-      pfx = '';
+  var themedefaults = {
+    /*
 
-    if (elm.style.animationName !== undefined) {
-      animation = true;
+      Blocks order:
+
+      | container
+      | - notification
+      | -- image
+      | -- text
+      | - notification
+      | -- image
+      | -- text
+      | ...
+
+    */
+    container_class: '',
+    notification_class: '',
+    image_class: '',
+    text_class: ''
+  };
+
+  var themes = {};
+
+  var addTheme = function(name, vars) {
+    var opts = $.extend({}, themedefaults);
+    $.extend(opts, vars);
+
+    themes[name] = opts;
+  };
+
+  $.notinyAddTheme = function(name, vars) {
+    addTheme(name, vars);
+  };
+
+  // Default themes
+
+  addTheme('dark', {
+    notification_class: 'notiny-theme-dark'
+  });
+
+  addTheme('light', {
+    notification_class: 'notiny-theme-dark'
+  });
+
+  // http://stackoverflow.com/questions/10888211/detect-support-for-transition-with-javascript
+  var detectCSSFeature = function(featurename) {
+    var feature = false,
+      domPrefixes = 'Webkit Moz ms O'.split(' '),
+      elm = document.createElement('div'),
+      featurenameCapital = null;
+
+    featurename = featurename.toLowerCase();
+
+    if (elm.style[featurename] !== undefined) {
+      feature = true;
     }
 
-    if (animation === false) {
+    if (feature === false) {
+      featurenameCapital = featurename.charAt(0).toUpperCase() + featurename.substr(1);
       for (var i = 0; i < domPrefixes.length; i++) {
-        if (elm.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
-          pfx = domPrefixes[i];
-          animationstring = pfx + 'Animation';
-          keyframeprefix = '-' + pfx.toLowerCase() + '-';
-          animation = true;
+        if (elm.style[domPrefixes[i] + featurenameCapital] !== undefined) {
+          feature = true;
           break;
         }
       }
     }
-
-    return animation;
-  };
+    return feature;
+  }
 
   var checkPosition = function(g_settings) {
     if (g_settings.x !== 'left' && g_settings.x !== 'right') {
@@ -72,22 +114,18 @@
     $.extend(settings, options);
     // Parse and verify position string
     settings = checkPosition(settings);
-    // Local copy of settings
 
-    // Wrapper
-    var wrapper = $('<div/>', {
-      class: 'notiny-wrapper'
-    });
+    var curr_theme = themes[settings.theme];
 
     // Creating notification
     var notification = $('<div/>', {
-      class: 'notiny-theme-' + settings.theme + ' notiny-content'
+      class: 'notiny-notification ' + curr_theme.notification_class
     });
 
     //var texttd = $('<td/>');
 
     var ptext = $('<div/>', {
-      class: 'notiny-content-text'
+      class: 'notiny-notification-text ' + curr_theme.text_class
     });
 
     // Strip
@@ -102,18 +140,13 @@
 
     // Image
     if (settings.image !== undefined) {
-      //var imgtd = $('<td/>', {
-      //  class: 'notiny-content-img'
-      //});
-
       var img = $('<img/>', {
         src: settings.image,
-        class: 'notiny-content-img'
+        class: 'notiny-notification-img ' + curr_theme.image_class
       });
 
       ptext.css('padding-left', '6px');
 
-      //imgtd.append(img);
       notification.prepend(img);
     }
 
@@ -126,15 +159,13 @@
 
     ptext.html(text);
 
-    //texttd.append(ptext);
     notification.append(ptext);
 
     // Creating container
-    var container = undefined;
     var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
-    if ($('#' + containerId).length == 0) {
-      container = $('<div/>', {
-        class: 'notiny-container',
+    if ($('#' + containerId).length === 0) {
+      var container = $('<div/>', {
+        class: 'notiny-container ' + curr_theme.container_class,
         id: containerId,
       });
 
@@ -143,11 +174,14 @@
 
       elem.append(container);
     } else {
-      container = $('#' + containerId);
+      var container = $('#' + containerId);
     }
 
-    wrapper.append(notification);
-    container.prepend(wrapper);
+    if (settings.y == 'top') {
+      container.prepend(notification);
+    } else {
+      container.append(notification);
+    }
 
     var closing = false;
 
@@ -155,30 +189,30 @@
       if (settings.animate) {
         if (!closing) {
           closing = true;
-          if (isAnimationSupported) {
+          if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
             notification.css('animation', settings.animation_hide);
             setTimeout(function() {
-              wrapper.remove();
+              notification.remove();
             }, 550);
           } else {
             // Fallback for old browsers
-            wrapper.fadeOut(400, function() {
-              wrapper.remove();
+            notification.fadeOut(400, function() {
+              notification.remove();
             });
           }
         }
       } else {
-        wrapper.remove();
+        notification.remove();
       }
     };
 
     var showAction = function() {
       if (settings.animate) {
-        if (isAnimationSupported) {
+        if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
           notification.css('animation', settings.animation_show);
         } else {
           // Fallback for old browsers
-          wrapper.fadeIn(500);
+          notification.fadeIn(500);
         }
       }
     };
@@ -190,6 +224,7 @@
         closeAction();
         return false;
       });
+      notification.css('cursor', 'pointer');
     }
 
     if (settings.autohide) {
@@ -200,13 +235,8 @@
     }
   };
 
-  $.fn.notiny = function(text, options) {
-    createNotification(text, options);
-    return this;
-  };
-
   $.notiny = function(text, options) {
     createNotification(text, options);
     return this;
-  }
+  };
 }(jQuery));

@@ -1,1 +1,244 @@
-!function(n){var t={image:void 0,x:"right",y:"bottom",theme:"dark",width:"300",background:!0,autohide:!0,clickhide:!0,delay:3e3,animate:!0,strip:!0,animation_show:"notiny-animation-show 0.4s forwards",animation_hide:"notiny-animation-hide 0.5s forwards"},i=function(){var n=!1,t="animation",i="",e="Webkit Moz O ms Khtml".split(" "),o="";if(void 0!==elm.style.animationName&&(n=!0),n===!1)for(var a=0;a<e.length;a++)if(void 0!==elm.style[e[a]+"AnimationName"]){o=e[a],t=o+"Animation",i="-"+o.toLowerCase()+"-",n=!0;break}return n},e=function(n){return"left"!==n.x&&"right"!==n.x&&(n.x="right"),"top"!==n.y&&"bottom"!==n.y&&(n.y="bottom"),n},o=function(o,a){var s=n("body"),r=n.extend({},t);n.extend(r,a),r=e(r);var c=n("<div/>",{"class":"notiny-wrapper"}),d=n("<table/>",{"class":"notiny-theme-"+r.theme+" notiny-content"}),m=n("<td/>"),p=n("<p/>",{"class":"notiny-content-text"});if(r.strip&&(p.css("white-space","nowrap"),p.css("text-overflow","ellipsis")),void 0!==r.image&&r.background&&!r.strip&&p.css("padding-top","0px"),void 0!==r.image){var l=n("<td/>",{"class":"notiny-content-img"}),h=n("<img/>",{src:r.image,"class":"notiny-content-img"});p.css("padding-left","6px"),l.append(h),d.prepend(l)}d.css("width",r.width),d.css("float",r.x),d.css("clear",r.x),p.html(o),m.append(p),d.append(m);var f=void 0,u="notiny-container-"+r.x+"-"+r.y;0==n("#"+u).length?(f=n("<div/>",{"class":"notiny-container",id:u}),f.css(r.x,10),f.css(r.y,10),s.append(f)):f=n("#"+u),c.append(d),f.prepend(c);var y=!1,v=function(){r.animate?y||(y=!0,i?(d.css("animation",r.animation_hide),setTimeout(function(){c.remove()},550)):c.fadeOut(400,function(){c.remove()})):c.remove()},g=function(){r.animate&&(i?d.css("animation",r.animation_show):c.fadeIn(500))};g(),r.clickhide&&d.click(function(){return v(),!1}),r.autohide&&setTimeout(function(){v()},r.delay+500)};n.fn.notiny=function(n,t){return o(n,t),this},n.notiny=function(n,t){return o(n,t),this}}(jQuery);
+(function($) {
+  var defaults = {
+    // Image path (http/base64)
+    image: undefined,
+    // Position on screen
+    x: 'right',
+    y: 'bottom',
+    // Theme
+    theme: 'dark',
+    // css width
+    width: '300',
+    // Display background or not, if false, background: transparent;
+    background: true,
+    // Hide automatically
+    autohide: true,
+    // Hide by click
+    clickhide: true,
+    // Autohide delay
+    delay: 3000,
+    // Enable animations
+    animate: true,
+    // Cuts long text strings
+    strip: true,
+    // Show animation string
+    animation_show: 'notiny-animation-show 0.4s forwards',
+    // Hide animation string
+    animation_hide: 'notiny-animation-hide 0.5s forwards'
+  };
+
+  var themedefaults = {
+    /*
+
+      Blocks order:
+
+      | container
+      | - notification
+      | -- image
+      | -- text
+      | - notification
+      | -- image
+      | -- text
+      | ...
+
+    */
+    container_class: '',
+    notification_class: '',
+    image_class: '',
+    text_class: ''
+  };
+
+  var themes = {};
+
+  var addTheme = function(name, vars) {
+    var opts = $.extend({}, themedefaults);
+    $.extend(opts, vars);
+
+    themes[name] = opts;
+  };
+
+  $.notinyAddTheme = function(name, vars) {
+    addTheme(name, vars);
+  };
+
+  // Default themes
+
+  addTheme('dark', {
+    notification_class: 'notiny-theme-dark'
+  });
+
+  addTheme('light', {
+    notification_class: 'notiny-theme-dark'
+  });
+
+  // https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations/Detecting_CSS_animation_support
+  var isAnimationSupported = function() {
+    var animation = false,
+      animationstring = 'animation',
+      keyframeprefix = '',
+      domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+      pfx = '';
+
+    if (elm.style.animationName !== undefined) {
+      animation = true;
+    }
+
+    if (animation === false) {
+      for (var i = 0; i < domPrefixes.length; i++) {
+        if (elm.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
+          pfx = domPrefixes[i];
+          animationstring = pfx + 'Animation';
+          keyframeprefix = '-' + pfx.toLowerCase() + '-';
+          animation = true;
+          break;
+        }
+      }
+    }
+
+    return animation;
+  };
+
+  var checkPosition = function(g_settings) {
+    if (g_settings.x !== 'left' && g_settings.x !== 'right') {
+      g_settings.x = 'right';
+    }
+    if (g_settings.y !== 'top' && g_settings.y !== 'bottom') {
+      g_settings.y = 'bottom';
+    }
+
+    return g_settings;
+  };
+
+  var createNotification = function(text, options) {
+    var elem = $('body');
+
+    var settings = $.extend({}, defaults);
+    $.extend(settings, options);
+    // Parse and verify position string
+    settings = checkPosition(settings);
+
+    var curr_theme = themes[settings.theme];
+
+    // Creating notification
+    var notification = $('<div/>', {
+      class: 'notiny-notification ' + curr_theme.notification_class
+    });
+
+    //var texttd = $('<td/>');
+
+    var ptext = $('<div/>', {
+      class: 'notiny-notification-text ' + curr_theme.text_class
+    });
+
+    // Strip
+    if (settings.strip) {
+      ptext.css('white-space', 'nowrap');
+      ptext.css('text-overflow', 'ellipsis');
+    }
+
+    if (settings.image !== undefined && settings.background && !settings.strip) {
+      ptext.css('padding-top', '0px');
+    }
+
+    // Image
+    if (settings.image !== undefined) {
+      var img = $('<img/>', {
+        src: settings.image,
+        class: 'notiny-notification-img ' + curr_theme.image_class
+      });
+
+      ptext.css('padding-left', '6px');
+
+      notification.prepend(img);
+    }
+
+    // Width
+    notification.css('width', settings.width);
+
+    // Float
+    notification.css('float', settings.x);
+    notification.css('clear', settings.x);
+
+    ptext.html(text);
+
+    notification.append(ptext);
+
+    // Creating container
+    var container = undefined;
+    var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
+    if ($('#' + containerId).length == 0) {
+      container = $('<div/>', {
+        class: 'notiny-container ' + curr_theme.container_class,
+        id: containerId,
+      });
+
+      container.css(settings.x, 10);
+      container.css(settings.y, 10);
+
+      elem.append(container);
+    } else {
+      container = $('#' + containerId);
+    }
+
+    if (settings.y == 'top') {
+      container.prepend(notification);
+    } else {
+      container.append(notification);
+    }
+
+    var closing = false;
+
+    var closeAction = function() {
+      if (settings.animate) {
+        if (!closing) {
+          closing = true;
+          if (isAnimationSupported) {
+            notification.css('animation', settings.animation_hide);
+            setTimeout(function() {
+              notification.remove();
+            }, 550);
+          } else {
+            // Fallback for old browsers
+            notification.fadeOut(400, function() {
+              notification.remove();
+            });
+          }
+        }
+      } else {
+        notification.remove();
+      }
+    };
+
+    var showAction = function() {
+      if (settings.animate) {
+        if (isAnimationSupported) {
+          notification.css('animation', settings.animation_show);
+        } else {
+          // Fallback for old browsers
+          notification.fadeIn(500);
+        }
+      }
+    };
+
+    showAction();
+
+    if (settings.clickhide) {
+      notification.click(function() {
+        closeAction();
+        return false;
+      });
+    }
+
+    if (settings.autohide) {
+      setTimeout(function() {
+        closeAction();
+        // + half second from show animation
+      }, settings.delay + 500);
+    }
+  };
+
+  $.notiny = function(text, options) {
+    createNotification(text, options);
+    return this;
+  };
+}(jQuery));
