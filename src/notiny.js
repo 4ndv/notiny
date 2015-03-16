@@ -94,7 +94,7 @@
       }
     }
     return feature;
-  }
+  };
 
   var checkPosition = function(g_settings) {
     if (g_settings.x !== 'left' && g_settings.x !== 'right') {
@@ -107,14 +107,85 @@
     return g_settings;
   };
 
-  var createNotification = function(text, options) {
+  var closeAction = function() {
+    if (settings.animate) {
+      if (!closing) {
+        closing = true;
+        if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
+          notification.css('animation', settings.animation_hide);
+          setTimeout(function() {
+            notification.remove();
+          }, 550);
+        } else {
+          // Fallback for old browsers
+          notification.fadeOut(400, function() {
+            notification.remove();
+          });
+        }
+      }
+    } else {
+      notification.remove();
+    }
+  };
+
+  var showAction = function() {
+    if (settings.animate) {
+      if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
+        notification.css('animation', settings.animation_show);
+      } else {
+        // Fallback for old browsers
+        notification.fadeIn(500);
+      }
+    }
+  };
+
+  var createContainerAndAppend = function(notification) {
     var elem = $('body');
 
-    var settings = $.extend({}, defaults);
-    $.extend(settings, options);
-    // Parse and verify position string
-    settings = checkPosition(settings);
+    // Creating container
+    var container;
+    var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
+    if ($('#' + containerId).length === 0) {
+      container = $('<div/>', {
+        class: 'notiny-container ' + curr_theme.container_class,
+        id: containerId,
+      });
 
+      container.css(settings.x, 10);
+      container.css(settings.y, 10);
+
+      elem.append(container);
+    } else {
+      container = $('#' + containerId);
+    }
+
+    if (settings.y === 'top') {
+      container.prepend(notification);
+    } else {
+      container.append(notification);
+    }
+
+    var closing = false;
+
+    showAction();
+
+    if (settings.clickhide) {
+      notification.click(function() {
+        closeAction();
+        return false;
+      });
+      notification.css('cursor', 'pointer');
+    }
+
+    if (settings.autohide) {
+      setTimeout(function() {
+        closeAction();
+        // + half second from show animation
+      }, settings.delay + 500);
+    }
+  };
+
+  var createNotification = function(text, settings) {
     var curr_theme = themes[settings.theme];
 
     // Creating notification
@@ -161,79 +232,16 @@
 
     notification.append(ptext);
 
-    // Creating container
-    var container;
-    var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
-    if ($('#' + containerId).length === 0) {
-      container = $('<div/>', {
-        class: 'notiny-container ' + curr_theme.container_class,
-        id: containerId,
-      });
+    createContainerAndAppend(notification);
+  };
 
-      container.css(settings.x, 10);
-      container.css(settings.y, 10);
+  var prepareNotification = function(text, options) {
+    var settings = $.extend({}, defaults);
+    $.extend(settings, options);
+    // Parse and verify position string
+    settings = checkPosition(settings);
 
-      elem.append(container);
-    } else {
-      container = $('#' + containerId);
-    }
-
-    if (settings.y === 'top') {
-      container.prepend(notification);
-    } else {
-      container.append(notification);
-    }
-
-    var closing = false;
-
-    var closeAction = function() {
-      if (settings.animate) {
-        if (!closing) {
-          closing = true;
-          if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-            notification.css('animation', settings.animation_hide);
-            setTimeout(function() {
-              notification.remove();
-            }, 550);
-          } else {
-            // Fallback for old browsers
-            notification.fadeOut(400, function() {
-              notification.remove();
-            });
-          }
-        }
-      } else {
-        notification.remove();
-      }
-    };
-
-    var showAction = function() {
-      if (settings.animate) {
-        if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-          notification.css('animation', settings.animation_show);
-        } else {
-          // Fallback for old browsers
-          notification.fadeIn(500);
-        }
-      }
-    };
-
-    showAction();
-
-    if (settings.clickhide) {
-      notification.click(function() {
-        closeAction();
-        return false;
-      });
-      notification.css('cursor', 'pointer');
-    }
-
-    if (settings.autohide) {
-      setTimeout(function() {
-        closeAction();
-        // + half second from show animation
-      }, settings.delay + 500);
-    }
+    createNotification(text, settings);
   };
 
   $.notiny = function(text, options) {
