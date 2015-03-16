@@ -71,32 +71,30 @@
     notification_class: 'notiny-theme-dark'
   });
 
-  // https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations/Detecting_CSS_animation_support
-  var isAnimationSupported = function() {
-    var animation = false,
-      animationstring = 'animation',
-      keyframeprefix = '',
-      domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-      pfx = '';
+  // http://stackoverflow.com/questions/10888211/detect-support-for-transition-with-javascript
+  var detectCSSFeature = function(featurename) {
+    var feature = false,
+      domPrefixes = 'Webkit Moz ms O'.split(' '),
+      elm = document.createElement('div'),
+      featurenameCapital = null;
 
-    if (elm.style.animationName !== undefined) {
-      animation = true;
+    featurename = featurename.toLowerCase();
+
+    if (elm.style[featurename] !== undefined) {
+      feature = true;
     }
 
-    if (animation === false) {
+    if (feature === false) {
+      featurenameCapital = featurename.charAt(0).toUpperCase() + featurename.substr(1);
       for (var i = 0; i < domPrefixes.length; i++) {
-        if (elm.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
-          pfx = domPrefixes[i];
-          animationstring = pfx + 'Animation';
-          keyframeprefix = '-' + pfx.toLowerCase() + '-';
-          animation = true;
+        if (elm.style[domPrefixes[i] + featurenameCapital] !== undefined) {
+          feature = true;
           break;
         }
       }
     }
-
-    return animation;
-  };
+    return feature;
+  }
 
   var checkPosition = function(g_settings) {
     if (g_settings.x !== 'left' && g_settings.x !== 'right') {
@@ -164,9 +162,9 @@
     notification.append(ptext);
 
     // Creating container
-    var container = undefined;
+    var container;
     var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
-    if ($('#' + containerId).length == 0) {
+    if ($('#' + containerId).length === 0) {
       container = $('<div/>', {
         class: 'notiny-container ' + curr_theme.container_class,
         id: containerId,
@@ -180,7 +178,7 @@
       container = $('#' + containerId);
     }
 
-    if (settings.y == 'top') {
+    if (settings.y === 'top') {
       container.prepend(notification);
     } else {
       container.append(notification);
@@ -192,7 +190,7 @@
       if (settings.animate) {
         if (!closing) {
           closing = true;
-          if (isAnimationSupported) {
+          if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
             notification.css('animation', settings.animation_hide);
             setTimeout(function() {
               notification.remove();
@@ -211,7 +209,7 @@
 
     var showAction = function() {
       if (settings.animate) {
-        if (isAnimationSupported) {
+        if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
           notification.css('animation', settings.animation_show);
         } else {
           // Fallback for old browsers
@@ -227,6 +225,7 @@
         closeAction();
         return false;
       });
+      notification.css('cursor', 'pointer');
     }
 
     if (settings.autohide) {
