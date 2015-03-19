@@ -160,6 +160,44 @@
 
   <div class="ui vertical segment">
     <div class="ui page grid">
+      <div class="sixteen wide column">
+        <h1>Custom animations</h1>
+        <p>
+          You can use your own show and hide css3 animations
+        </p>
+      </div>
+      <div class="eight wide column">
+        <p>
+          <b>CSS</b>
+          <pre><code data-language="css">@keyframes custom-hide-animation {
+  0% {
+    transform: scale(1, 1);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5, 1.5);
+  }
+}</code></pre>
+        </p>
+      </div>
+      <div class="eight wide column">
+        <p>
+          <b>JavaScript</b>
+        </p>
+        <pre><code data-language="javascript">$.notiny({
+  text: 'Custom hide animation',
+  animation_hide: 'custom-hide-animation 0.5s forwards'
+});</code></pre>
+        <div class="ui blue button" onclick="$.notiny({text: 'Custom hide animation', animation_hide: 'custom-hide-animation 0.5s forwards'});">Run</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical segment">
+    <div class="ui page grid">
       <div class="column">
         <h1>Build</h1>
         <p>

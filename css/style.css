@@ -38,3 +38,16 @@ code {
   position: relative;
   top: -2px;
 }
+
+@keyframes custom-hide-animation {
+  0% {
+    transform: scale(1, 1);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5, 1.5);
+  }
+}
