@@ -14,23 +14,23 @@
 $(document).ready( function() {
   var i = 0;
   $("#bottom-right").click(function(){
-    $.notiny("Hello world " + i);
+    $.notiny({ text: "Hello world " + i });
     i++;
   });
   $("#bottom-right-2").click(function(){
-    $.notiny("KEK and veryveryvery long and long and long and long and long text", { image: 'http://i2.kym-cdn.com/photos/images/original/000/802/377/ce6.jpg' });
+    $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", image: 'http://i2.kym-cdn.com/photos/images/original/000/802/377/ce6.jpg' });
   });
   $("#bottom-right-noa").click(function(){
-    $.notiny("KEK and veryveryvery long and long and long and long and long text", { animate: false });
+    $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", animate: false });
   });
   $("#bottom-right-aw").click(function(){
-    $.notiny("KEK and veryveryvery long and long and long and long and long text", { width: '100%' });
+    $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", width: '100%' });
   });
   $("#top-right").click(function(){
-    $.notiny("Top Right", { y: 'top' });
+    $.notiny({ text: "Top Right", y: 'top' });
   });
   $("#top-left").click(function(){
-    $.notiny("Top Left", { y: 'top', x: 'left' });
+    $.notiny({ text: "Top Left", y: 'top', x: 'left' });
   });
 });
 </script>
