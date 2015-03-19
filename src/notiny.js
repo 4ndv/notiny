@@ -44,6 +44,9 @@
       | ...
 
     */
+
+    // Classes that will be added to div's
+
     container_class: '',
     notification_class: '',
     image_class: '',
@@ -70,7 +73,7 @@
   });
 
   addTheme('light', {
-    notification_class: 'notiny-theme-dark notiny-default-vars'
+    notification_class: 'notiny-theme-light notiny-default-vars'
   });
 
   // http://stackoverflow.com/questions/10888211/detect-support-for-transition-with-javascript

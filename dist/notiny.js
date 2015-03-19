@@ -70,7 +70,7 @@
   });
 
   addTheme('light', {
-    notification_class: 'notiny-theme-dark notiny-default-vars'
+    notification_class: 'notiny-theme-light notiny-default-vars'
   });
 
   // http://stackoverflow.com/questions/10888211/detect-support-for-transition-with-javascript
@@ -99,10 +99,10 @@
   };
 
   var checkPosition = function(g_settings) {
-    if (g_settings.x !== 'left' && g_settings.x !== 'right' && g_settings.x !== 'center') {
+    if (g_settings.x !== 'left' && g_settings.x !== 'right') {
       g_settings.x = 'right';
     }
-    if (g_settings.y !== 'top' && g_settings.y !== 'bottom' && g_settings.x !== 'center') {
+    if (g_settings.y !== 'top' && g_settings.y !== 'bottom') {
       g_settings.y = 'bottom';
     }
 
