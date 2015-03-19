@@ -139,6 +139,7 @@
         notification.css('animation', settings.animation_show);
       } else {
         // Fallback for old browsers
+        notification.hide();
         notification.fadeIn(500);
       }
     }
