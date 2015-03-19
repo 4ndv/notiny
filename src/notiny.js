@@ -99,10 +99,10 @@
   };
 
   var checkPosition = function(g_settings) {
-    if (g_settings.x !== 'left' && g_settings.x !== 'right' && g_settings.x !== 'center') {
+    if (g_settings.x !== 'left' && g_settings.x !== 'right') {
       g_settings.x = 'right';
     }
-    if (g_settings.y !== 'top' && g_settings.y !== 'bottom' && g_settings.x !== 'center') {
+    if (g_settings.y !== 'top' && g_settings.y !== 'bottom') {
       g_settings.y = 'bottom';
     }
 
