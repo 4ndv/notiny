@@ -3,24 +3,32 @@ Notiny
 
 [![Code Climate](https://codeclimate.com/github/andreyviktorov/notiny/badges/gpa.svg)](https://codeclimate.com/github/andreyviktorov/notiny)
 
-Ultra-small jquery notification plugin
+Just a little (only 4.6kb compressed) notifications plugin
 
-## Usage
+## Usage, demos, options and other
 
-`$.notiny("Hello <b>world</b>!");`
+[Visit project's website](http://andreyviktorov.github.io/notiny)
 
-## Options
+## License info
 
-* image - link to image, **default: undefined**
-* position - position on screen, **default: bottom right**
-* theme - theme name, **default: light**
-* width - width of notification, **default: 500px**
-* strip - strips long text to fit width, **default: true**
+The MIT License (MIT)
 
-## Themes
+Copyright (c) 2015 Andrey Viktorov
 
-Included themes: light, dark
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## Demo
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You can see demo [here](http://andreyviktorov.github.io/notiny/)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

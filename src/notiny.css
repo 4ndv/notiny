@@ -27,7 +27,7 @@
   }
   100% {
     opacity: 0;
-    filter: blur(2px);
+    filter: blur(4px);
     transform: scale(1, 1);
   }
 }
@@ -35,9 +35,9 @@
   0% {
     opacity: 0;
     transform: scale(1, 1);
-    filter: blur(2px);
+    filter: blur(4px);
   }
-  5% {
+  15% {
     opacity: 1;
   }
   50% {

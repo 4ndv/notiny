@@ -35,8 +35,8 @@
 
   100% {
     opacity: 0;
-    -webkit-filter: blur(2px);
-    filter: blur(2px);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
   }
@@ -63,8 +63,8 @@
 
   100% {
     opacity: 0;
-    -webkit-filter: blur(2px);
-    filter: blur(2px);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
   }
@@ -75,11 +75,11 @@
     opacity: 0;
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
-    -webkit-filter: blur(2px);
-    filter: blur(2px);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
   }
 
-  5% {
+  15% {
     opacity: 1;
   }
 
@@ -104,11 +104,11 @@
     opacity: 0;
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
-    -webkit-filter: blur(2px);
-    filter: blur(2px);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
   }
 
-  5% {
+  15% {
     opacity: 1;
   }
 

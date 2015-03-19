@@ -44,6 +44,9 @@
       | ...
 
     */
+
+    // Classes that will be added to div's
+
     container_class: '',
     notification_class: '',
     image_class: '',
