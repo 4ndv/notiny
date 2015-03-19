@@ -1,10 +1,11 @@
 (function($) {
+  var $body = $('body');
+
   var defaults = {
     // Image path (http/base64)
     image: undefined,
     // Position on screen
-    x: 'right',
-    y: 'bottom',
+    position: 'right-bottom',
     // Theme
     theme: 'dark',
     // Template, these classes should ALWAYS be there
@@ -53,28 +54,27 @@
     text_class: ''
   };
 
-  var themes = {};
-
-  var addTheme = function(name, vars) {
-    var opts = $.extend({}, themedefaults);
-    $.extend(opts, vars);
-
-    themes[name] = opts;
+  /**
+   * List of possible containers
+   */
+  var containers = {
+    'left-top': $('<div />', {
+      class: 'notiny-container',
+      css: { top: 10, left: 10 },
+    }),
+    'left-bottom': $('<div />', {
+      class: 'notiny-container',
+      css: { bottom: 10, left: 10 }
+    }),
+    'right-top': $('<div />', {
+      class: 'notiny-container',
+      css: { top: 10, right: 10 }
+    }),
+    'right-bottom': $('<div />', {
+      class: 'notiny-container',
+      css: { bottom: 10, right: 10 }
+    })
   };
-
-  $.notinyAddTheme = function(name, vars) {
-    addTheme(name, vars);
-  };
-
-  // Default themes
-
-  addTheme('dark', {
-    notification_class: 'notiny-theme-dark notiny-default-vars'
-  });
-
-  addTheme('light', {
-    notification_class: 'notiny-theme-light notiny-default-vars'
-  });
 
   // http://stackoverflow.com/questions/10888211/detect-support-for-transition-with-javascript
   var detectCSSFeature = function(featurename) {
@@ -101,142 +101,121 @@
     return feature;
   };
 
-  var checkPosition = function(g_settings) {
-    if (g_settings.x !== 'left' && g_settings.x !== 'right') {
-      g_settings.x = 'right';
-    }
-    if (g_settings.y !== 'top' && g_settings.y !== 'bottom') {
-      g_settings.y = 'bottom';
-    }
-
-    return g_settings;
-  };
-
-  var closeAction = function(notification, settings) {
+  var closeAction = function($notification, settings) {
     if (settings.animate) {
       if (!settings._state_closing) {
         settings._state_closing = true;
         if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-          notification.css('animation', settings.animation_hide);
+          $notification.css('animation', settings.animation_hide);
           setTimeout(function() {
-            notification.remove();
+            $notification.remove();
           }, 550);
         } else {
           // Fallback for old browsers
-          notification.fadeOut(400, function() {
-            notification.remove();
+          $notification.fadeOut(400, function() {
+            $notification.remove();
           });
         }
       }
     } else {
-      notification.remove();
+      $notification.remove();
     }
   };
 
-  var showAction = function(notification, settings) {
+  var showAction = function($notification, settings) {
     if (settings.animate) {
       if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-        notification.css('animation', settings.animation_show);
+        $notification.css('animation', settings.animation_show);
       } else {
         // Fallback for old browsers
-        notification.hide();
-        notification.fadeIn(500);
+        $notification.hide();
+        $notification.fadeIn(500);
       }
     }
   };
 
   var prepareNotification = function(options) {
-    var settings = $.extend({}, defaults);
-    $.extend(settings, options);
-    // Parse and verify position string
-    settings = checkPosition(settings);
-    settings._curr_theme = themes[settings.theme];
-
-    createNotification(settings);
+    createNotification($.extend({}, defaults, options));
   };
 
   var createNotification = function(settings) {
     // Creating notification
-    var notification = $(settings.template);
+    var $notification = $(settings.template);
 
     // Adding classes
-    notification.addClass(settings._curr_theme.notification_class);
+    $notification.addClass(settings.theme.notification_class);
 
-    var ptext = notification.children('.notiny-text');
-    ptext.addClass(settings._curr_theme.text_class);
+    var $ptext = $notification.find('.notiny-text');
+    $ptext.addClass(settings.theme.text_class);
+    $ptext.html(settings.text);
 
     // Image
-    var img = notification.children('.notiny-img');
+    var $img = $notification.find('.notiny-img');
     if (settings.image !== undefined) {
-      notification.addClass('notiny-with-img');
-      img.css('display', 'block');
-      img.addClass(settings._curr_theme.image_class);
-      img.attr('src', settings.image);
+      $notification.addClass('notiny-with-img');
+      $img.css('display', 'block');
+      $img.addClass(settings.theme.image_class);
+      $img.attr('src', settings.image);
     } else {
-      img.hide();
-      notification.addClass('notiny-without-img');
+      $img.hide();
+      $notification.addClass('notiny-without-img');
     }
 
     // Width
-    notification.css('width', settings.width);
+    $notification.css('width', settings.width);
 
-    // Float
-    notification.css('float', settings.x);
-    notification.css('clear', settings.x);
-
-    ptext.html(settings.text);
-
-    createContainerAndAppend(notification, settings);
+    appendToContainer($notification, settings);
   };
 
-  var createContainerAndAppend = function(notification, settings) {
-    var elem = $('body');
+  var appendToContainer = function($notification, settings) {
+    var $container = containers[settings.position];
+    
+    $container.addClass(settings.theme.container_class);
+    $body.append($container);
 
-    // Creating container
-    var container;
-    var containerId = 'notiny-container-' + settings.x + '-' + settings.y;
-    if ($('#' + containerId).length === 0) {
-      container = $('<div/>', {
-        class: 'notiny-container ' + settings._curr_theme.container_class,
-        id: containerId,
-      });
-
-      container.css(settings.x, 10);
-      container.css(settings.y, 10);
-
-      elem.append(container);
+    if (settings.position.slice(-3) === 'top') {
+       $container.prepend($notification);
     } else {
-      container = $('#' + containerId);
-    }
-
-    if (settings.y === 'top') {
-      container.prepend(notification);
-    } else {
-      container.append(notification);
+       $container.append($notification);
     }
 
     settings._state_closing = false;
 
-    showAction(notification, settings);
+    showAction($notification, settings);
 
     if (settings.clickhide) {
-      notification.click(function() {
-        closeAction(notification, settings);
+      $notification.css('cursor', 'pointer');
+      $notification.on('click', function() {
+        closeAction($notification, settings);
         return false;
       });
-      notification.css('cursor', 'pointer');
     }
 
     if (settings.autohide) {
       setTimeout(function() {
-        closeAction(notification, settings);
+        closeAction($notification, settings);
         // + half second from show animation
       }, settings.delay + 500);
     }
   };
 
   $.notiny = function(options) {
-    prepareNotification(options);
+    prepareNotification($.extend(options, {
+      theme: $.notiny.themes[options.theme]
+    }));
     return this;
   };
+
+  $.notiny.addTheme = function(name, options) {
+    var settings = $.extend({}, themedefaults, options);
+    (this.themes = this.themes || {})[name] = settings;
+  };
+
+  // Default themes
+  $.notiny.addTheme('dark', {
+    notification_class: 'notiny-theme-dark notiny-default-vars'
+  });
+  $.notiny.addTheme('light', {
+    notification_class: 'notiny-theme-light notiny-default-vars'
+  });
 }(jQuery));
