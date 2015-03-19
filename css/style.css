@@ -32,3 +32,9 @@ code {
 .demo-outer {
   min-height: 100%;
 }
+
+.addthis_sharing_toolbox {
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
