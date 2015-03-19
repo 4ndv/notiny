@@ -86,7 +86,7 @@
 }
 .notiny-default-vars .notiny-text {
   font-family: sans-serif;
-  font-size: 0.8em !important;
+  font-size: 13px;
   padding: 8px 5px 6px 5px;
   display: block;
   overflow: hidden;
