@@ -1,0 +1,34 @@
+.site-header-column {
+  padding: 5em 0 !important;
+}
+
+.site-header-column h1 {
+  font-size: 5em;
+  margin-bottom: 0 !important;
+}
+
+.site-header-column p {
+  margin: 0.5em 0em 1em 0em !important;
+}
+
+pre {
+  border-radius: 0.3em;
+  padding: 1.5em !important;
+}
+
+code {
+  font-family: monospace !important;
+  font-weight: 700;
+}
+
+.demo-header h1 {
+  font-size: 3em;
+}
+
+.demo-inner {
+  min-width: 100%;
+}
+
+.demo-outer {
+  min-height: 100%;
+}
