@@ -1,5 +1,6 @@
 (function($) {
   var $body = $('body');
+  var $notiny = $('<div class="notiny" />').appendTo($body);
 
   var defaults = {
     // Image path (http/base64)
@@ -61,23 +62,19 @@
     'left-top': $('<div />', {
       class: 'notiny-container',
       css: { top: 10, left: 10 },
-      id: 'notiny-left-top'
-    }),
+    }).appendTo($notiny),
     'left-bottom': $('<div />', {
       class: 'notiny-container',
       css: { bottom: 10, left: 10 },
-      id: 'notiny-left-bottom'
-    }),
+    }).appendTo($notiny),
     'right-top': $('<div />', {
       class: 'notiny-container',
       css: { top: 10, right: 10 },
-      id: 'notiny-right-top'
-    }),
+    }).appendTo($notiny),
     'right-bottom': $('<div />', {
       class: 'notiny-container',
       css: { bottom: 10, right: 10 },
-      id: 'notiny-right-bottom'
-    })
+    }).appendTo($notiny)
   };
 
   // http://stackoverflow.com/questions/10888211/detect-support-for-transition-with-javascript
@@ -184,15 +181,8 @@
       $.notiny({ text: '<b>WARNING!:</b> <b>x</b> and <b>y</b> options was removed, please use <b>position</b> instead!', width: 'auto' });
     }
 
-    var $container;
-    var findC = $('#notiny-' + settings.position);
-    if(findC.length === 0) {
-      $container = containers[settings.position];
-      $container.addClass(settings.theme.container_class);
-      $body.append($container);
-    } else {
-      $container = findC;
-    }
+    var $container = containers[settings.position];
+    $container.addClass(settings.theme.container_class);
 
     if (settings.position.slice(-3) === 'top') {
        $container.prepend($notification);
