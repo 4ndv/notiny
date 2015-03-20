@@ -61,18 +61,22 @@
     'left-top': $('<div />', {
       class: 'notiny-container',
       css: { top: 10, left: 10 },
+      id: 'notiny-left-top'
     }),
     'left-bottom': $('<div />', {
       class: 'notiny-container',
-      css: { bottom: 10, left: 10 }
+      css: { bottom: 10, left: 10 },
+      id: 'notiny-left-bottom'
     }),
     'right-top': $('<div />', {
       class: 'notiny-container',
-      css: { top: 10, right: 10 }
+      css: { top: 10, right: 10 },
+      id: 'notiny-right-top'
     }),
     'right-bottom': $('<div />', {
       class: 'notiny-container',
-      css: { bottom: 10, right: 10 }
+      css: { bottom: 10, right: 10 },
+      id: 'notiny-right-bottom'
     })
   };
 
@@ -99,6 +103,10 @@
       }
     }
     return feature;
+  };
+
+  var generateRandomId = function() {
+    return 'notiny-' + Math.floor((Math.random() * 100000) + 1);
   };
 
   var closeAction = function($notification, settings) {
@@ -142,6 +150,9 @@
     // Creating notification
     var $notification = $(settings.template);
 
+    // Theme
+    settings.theme = $.notiny.themes[settings.theme];
+
     // Adding classes
     $notification.addClass(settings.theme.notification_class);
 
@@ -173,10 +184,15 @@
       $.notiny({ text: '<b>WARNING!:</b> <b>x</b> and <b>y</b> options was removed, please use <b>position</b> instead!', width: 'auto' });
     }
 
-    var $container = containers[settings.position];
-
-    $container.addClass(settings.theme.container_class);
-    $body.append($container);
+    var $container;
+    var findC = $('#notiny-' + settings.position);
+    if(findC.length === 0) {
+      $container = containers[settings.position];
+      $container.addClass(settings.theme.container_class);
+      $body.append($container);
+    } else {
+      $container = findC;
+    }
 
     if (settings.position.slice(-3) === 'top') {
        $container.prepend($notification);
@@ -184,9 +200,11 @@
        $container.append($notification);
     }
 
-    settings._state_closing = false;
+    var floatclear = settings.position.split('-')[0];
+    $notification.css('float', floatclear);
+    $notification.css('clear', floatclear);
 
-    showAction($notification, settings);
+    settings._state_closing = false;
 
     if (settings.clickhide) {
       $notification.css('cursor', 'pointer');
@@ -202,12 +220,12 @@
         // + half second from show animation
       }, settings.delay + 500);
     }
+
+    showAction($notification, settings);
   };
 
   $.notiny = function(options) {
-    prepareNotification($.extend(options, {
-      theme: $.notiny.themes[options.theme]
-    }));
+    prepareNotification(options);
     return this;
   };
 
