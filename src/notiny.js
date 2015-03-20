@@ -217,7 +217,7 @@
   };
 
   // TODO: Remove in next major release
-  $.notinyAddTheme = function(){name, options} {
+  $.notinyAddTheme = function(name, options) {
     $.notiny( { text: '<b>WARNING!:</b> <b>$.notinyAddTheme</b> was removed, please use <b>$.notiny.addTheme</b> instead!', width: 'auto' });
   };
 
