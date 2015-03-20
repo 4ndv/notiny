@@ -9,6 +9,7 @@
 <button id="bottom-right">Bottom Right</button><button id="bottom-right-2">Bottom Right With Image</button>
 <button id="bottom-right-noa">Bottom Right No Animation</button>
 <button id="bottom-right-aw">Bottom Right Auto width</button>
+<button id="light-theme">Light theme</button>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script>
 $(document).ready( function() {
@@ -27,10 +28,13 @@ $(document).ready( function() {
     $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", width: '100%', animation_show: 'notiny-animation-show-wtf 0.4s' });
   });
   $("#top-right").click(function(){
-    $.notiny({ text: "Top Right", y: 'top' });
+    $.notiny({ text: "Top Right", position: 'right-top' });
   });
   $("#top-left").click(function(){
     $.notiny({ text: "Top Left", y: 'top', x: 'left' });
+  });
+  $("#light-theme").click(function(){
+    $.notiny({ text: "Light Theme", theme: "light" });
   });
 });
 </script>
