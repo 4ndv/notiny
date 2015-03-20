@@ -102,10 +102,6 @@
     return feature;
   };
 
-  var generateRandomId = function() {
-    return 'notiny-' + Math.floor((Math.random() * 100000) + 1);
-  };
-
   var closeAction = function($notification, settings) {
     if (settings.animate) {
       if (!settings._state_closing) {
