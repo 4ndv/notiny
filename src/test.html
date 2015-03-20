@@ -24,7 +24,7 @@ $(document).ready( function() {
     $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", animate: false });
   });
   $("#bottom-right-aw").click(function(){
-    $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", width: '100%' });
+    $.notiny({ text: "KEK and veryveryvery long and long and long and long and long text", width: '100%', animation_show: 'notiny-animation-show-wtf 0.4s' });
   });
   $("#top-right").click(function(){
     $.notiny({ text: "Top Right", y: 'top' });
@@ -34,6 +34,24 @@ $(document).ready( function() {
   });
 });
 </script>
+<style>
+@keyframes notiny-animation-show-wtf {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+  }
+  90% {
+    filter: blur(0px);
+  }
+  100% {
+  }
+}
+</style>
 <script src="notiny.js"></script>
 <link href="notiny.css" rel="stylesheet" />
 </body>

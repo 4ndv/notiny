@@ -101,6 +101,10 @@
     return feature;
   };
 
+  var generateRandomId = function() {
+    return 'notiny-' + Math.floor((Math.random() * 100000) + 1);
+  };
+
   var closeAction = function($notification, settings) {
     if (settings.animate) {
       if (!settings._state_closing) {
@@ -125,7 +129,7 @@
   var showAction = function($notification, settings) {
     if (settings.animate) {
       if (detectCSSFeature('animation') && detectCSSFeature('transform')) {
-        $notification.css('animation', settings.animation_show);
+        $('#' + settings._id).css('animation', settings.animation_show);
       } else {
         // Fallback for old browsers
         $notification.hide();
@@ -141,6 +145,10 @@
   var createNotification = function(settings) {
     // Creating notification
     var $notification = $(settings.template);
+
+    // Set id
+    settings._id = generateRandomId();
+    $notification.attr('id', settings._id);
 
     // Theme
     settings.theme = $.notiny.themes[settings.theme];

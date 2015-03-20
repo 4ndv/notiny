@@ -9,6 +9,10 @@ Just a little (only 4.6kb compressed) notifications plugin
 
 [Visit project's website](http://andreyviktorov.github.io/notiny)
 
+## Thanks
+
+[Dustin Hayes](https://github.com/dustinhayes)
+
 ## License info
 
 The MIT License (MIT)
