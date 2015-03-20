@@ -142,6 +142,9 @@
     // Creating notification
     var $notification = $(settings.template);
 
+    // Theme
+    settings.theme = $.notiny.themes[settings.theme];
+
     // Adding classes
     $notification.addClass(settings.theme.notification_class);
 
@@ -205,9 +208,7 @@
   };
 
   $.notiny = function(options) {
-    prepareNotification($.extend(options, {
-      theme: $.notiny.themes[options.theme]
-    }));
+    prepareNotification(options);
     return this;
   };
 
