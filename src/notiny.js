@@ -200,6 +200,10 @@
        $container.append($notification);
     }
 
+    var floatclear = settings.position.split('-')[0];
+    $notification.css('float', floatclear);
+    $notification.css('clear', floatclear);
+
     settings._state_closing = false;
 
     if (settings.clickhide) {
