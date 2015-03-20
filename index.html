@@ -22,7 +22,7 @@
     <div class="ui page grid">
       <div class="column center aligned site-header-column">
         <h1>Notiny</h1>
-        <span class="ui mini label">v0.0.2</span>
+        <span class="ui mini label">v0.0.3</span>
         <p class="ui medium inverted header">
           Just a little (only 4.6kb compressed) notifications plugin
         </p>
@@ -66,8 +66,8 @@
         <pre><code data-language="javascript">$.notiny({ text: 'Hello, image!', image: 'https://octodex.github.com/images/privateinvestocat.jpg' });</pre></code>
         <div class="ui blue button" onclick="$.notiny({ text: 'Hello, image!', image: 'https://octodex.github.com/images/privateinvestocat.jpg' });">Run</div>
         <h4>Notification on top right corner:</h4>
-        <pre><code data-language="javascript">$.notiny({ text: 'Notification at top right', x: 'right', y: 'top' });</pre></code>
-        <div class="ui blue button" onclick="$.notiny({ text: 'Notification at top right', x: 'right', y: 'top' });">Run</div>
+        <pre><code data-language="javascript">$.notiny({ text: 'Notification at top right', position: 'right-top' });</pre></code>
+        <div class="ui blue button" onclick="$.notiny({ text: 'Notification at top right', position: 'right-top' });">Run</div>
         <h4>Notification with auto width:</h4>
         <pre><code data-language="javascript">$.notiny({ width: 'auto', text: 'Not too long text' });</pre></code>
         <div class="ui blue button" onclick="$.notiny({ width: 'auto', text: 'Not too long text' });">Run</div>
@@ -83,9 +83,8 @@
         <pre><code data-language="javascript">{
   // Image path (http/base64)
   image: undefined,
-  // Position on screen
-  x: 'right',
-  y: 'bottom',
+  // Position on screen, values: right-bottom, right-top, left-bottom, left-top
+  position: 'right-bottom',
   // Theme
   theme: 'dark',
   // Template, these classes should ALWAYS be there
@@ -123,7 +122,7 @@
       </div>
       <div class="eight wide column">
         <h4>Example:</h4>
-        <pre><code data-language="javascript">$.notinyAddTheme('dark', {
+        <pre><code data-language="javascript">$.notiny.addTheme('dark', {
   notification_class: 'notiny-theme-dark notiny-default-vars'
 });</code></pre>
         <pre><code data-language="css">.notiny-theme-dark {
