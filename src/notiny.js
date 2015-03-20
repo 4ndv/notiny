@@ -168,8 +168,13 @@
   };
 
   var appendToContainer = function($notification, settings) {
+    // TODO: Remove in next release
+    if(settings.x !== undefined || settings.y !== undefined) {
+      $.notiny({ text: '<b>WARNING!:</b> <b>x</b> and <b>y</b> options was removed, please use <b>position</b> instead!', width: 'auto' });
+    }
+
     var $container = containers[settings.position];
-    
+
     $container.addClass(settings.theme.container_class);
     $body.append($container);
 
@@ -209,6 +214,11 @@
   $.notiny.addTheme = function(name, options) {
     var settings = $.extend({}, themedefaults, options);
     (this.themes = this.themes || {})[name] = settings;
+  };
+
+  // TODO: Remove in next major release
+  $.notinyAddTheme = function(){name, options} {
+    $.notiny( { text: '<b>WARNING!:</b> <b>$.notinyAddTheme</b> was removed, please use <b>$.notiny.addTheme</b> instead!', width: 'auto' });
   };
 
   // Default themes
