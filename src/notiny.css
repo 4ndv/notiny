@@ -1,15 +1,27 @@
 .notiny-container * {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .notiny-container {
   position: fixed;
   z-index: 9999;
 }
+.notiny-container-fluid-top .notiny-base, .notiny-container-fluid-bottom .notiny-base {
+  width:100%;
+  border-radius:0;
+}
+.notiny-container-fluid-top .notiny-base {
+  margin-top:0;
+}
+.notiny-container-fluid-bottom .notiny-base {
+  margin-bottom:0;
+}
 .notiny-img {
   display: none;
 }
-
 
 /* Animations */
 
