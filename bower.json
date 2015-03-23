@@ -1,0 +1,26 @@
+{
+  "name": "notiny",
+  "version": "0.0.6",
+  "homepage": "https://github.com/mamboer/notiny",
+  "authors": [
+    "mamboer <mamboer@live.com>"
+  ],
+  "description": "Just a little (only 5.1kb compressed) notifications plugin",
+  "main": ["dist/notiny.min.css","dist/notiny.min.js"],
+  "keywords": [
+    "notiny",
+    "notification",
+    "notice",
+    "tips"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "gulpfile.js",
+    "src",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
