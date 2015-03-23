@@ -1,0 +1,32 @@
+{
+  "name": "notiny",
+  "description": "Tiny jQuery notifications plugin",
+  "homepage": "http://andreyviktorov.github.io/notiny",
+  "author": {
+    "name": "Andrey Viktorov",
+    "web": "http://andreyviktorov.github.io"
+  },
+  "dependencies": {
+    "jquery": ">=1.8"
+  },
+  "main": [
+    "dist/notiny.min.css",
+    "dist/notiny.min.js"
+  ],
+  "keywords": [
+    "notiny",
+    "notification",
+    "notify",
+    "tips",
+    "jQuery",
+    "plugin"
+  ],
+  "license": "http://notiny.mit-license.org/",
+  "ignore": [
+    "gulpfile.js",
+    "src",
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}
