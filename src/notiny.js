@@ -178,8 +178,14 @@
         $notification.css('width', settings.width);
     }
 
+    // cache the settings for further use
+    $notification.data('settings',settings);
 
     appendToContainer($notification, settings);
+
+    // return the dom for further use
+    return $notification;
+
   };
 
   var appendToContainer = function($notification, settings) {
@@ -229,6 +235,11 @@
   $.notiny.addTheme = function(name, options) {
     var settings = $.extend({}, themedefaults, options);
     (this.themes = this.themes || {})[name] = settings;
+  };
+
+  // manual close via $.notiny.close
+  $.notiny.close = function( $notiny ){
+    closeAction($notiny,$notiny.data('settings'));    
   };
 
   // TODO: Remove in next major release
