@@ -74,6 +74,14 @@
     'right-bottom': $('<div />', {
       class: 'notiny-container',
       css: { bottom: 10, right: 10 },
+    }).appendTo($notiny),
+    'fluid-top': $('<div />',{
+      class: 'notiny-container notiny-container-fluid-top',
+      css:{ top: 0, left:0, right:0 }
+    }).appendTo($notiny),
+    'fluid-bottom': $('<div />',{
+      class: 'notiny-container notiny-container-fluid-bottom',
+      css:{ bottom:0, left:0, right:0 }
     }).appendTo($notiny)
   };
 
@@ -166,7 +174,10 @@
     }
 
     // Width
-    $notification.css('width', settings.width);
+    if( settings.position.indexOf('fluid') === -1 ){
+        $notification.css('width', settings.width);
+    }
+
 
     appendToContainer($notification, settings);
   };

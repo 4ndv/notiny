@@ -9,6 +9,8 @@
 <button id="bottom-right">Bottom Right</button><button id="bottom-right-2">Bottom Right With Image</button>
 <button id="bottom-right-noa">Bottom Right No Animation</button>
 <button id="bottom-right-aw">Bottom Right Auto width</button>
+<button id="fluid-top">Top Notiny with fluid width!</button>
+<button id="fluid-bottom">Bottom Notiny with fluid width!</button>
 <button id="light-theme">Light theme</button>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script>
@@ -35,6 +37,12 @@ $(document).ready( function() {
   });
   $("#light-theme").click(function(){
     $.notiny({ text: "Light Theme", theme: "light" });
+  });
+  $('#fluid-top').click(function(){
+    $.notiny({ text: "Top Notiny with fluid width", position: 'fluid-top' });
+  });
+  $('#fluid-bottom').click(function(){
+    $.notiny({ text: "Bottom Notiny with fluid width", position: 'fluid-bottom' });
   });
 });
 </script>
