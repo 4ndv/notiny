@@ -16,6 +16,7 @@
   "license": "MIT",
   "ignore": [
     "gulpfile.js",
+    "src",
     "**/.*",
     "node_modules",
     "bower_components",
