@@ -3,7 +3,7 @@ Notiny
 
 [![Code Climate](https://codeclimate.com/github/andreyviktorov/notiny/badges/gpa.svg)](https://codeclimate.com/github/andreyviktorov/notiny)
 
-Just a little (only 4.6kb compressed) notifications plugin
+Just a little (only 5.1kb compressed) notifications plugin
 
 ## Usage, demos, options and other
 
@@ -12,6 +12,8 @@ Just a little (only 4.6kb compressed) notifications plugin
 ## Thanks
 
 [Dustin Hayes](https://github.com/dustinhayes)
+
+[Levin Van](https://github.com/mamboer)
 
 ## License info
 
