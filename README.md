@@ -1,13 +1,13 @@
 Notiny
 ========
 
-[![Code Climate](https://codeclimate.com/github/andreyviktorov/notiny/badges/gpa.svg)](https://codeclimate.com/github/andreyviktorov/notiny)
+[![Code Climate](https://codeclimate.com/github/4ndv/notiny/badges/gpa.svg)](https://codeclimate.com/github/4ndv/notiny)
 
 Just a little (only 4.6kb compressed) notifications plugin
 
 ## Usage, demos, options and other
 
-[Visit project's website](http://andreyviktorov.github.io/notiny)
+[Visit project's website](http://4ndv.github.io/notiny)
 
 ## Thanks
 

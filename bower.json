@@ -1,10 +1,10 @@
 {
   "name": "notiny",
   "description": "Tiny jQuery notifications plugin",
-  "homepage": "http://andreyviktorov.github.io/notiny",
+  "homepage": "http://4ndv.github.io/notiny",
   "author": {
     "name": "Andrey Viktorov",
-    "web": "http://andreyviktorov.github.io"
+    "web": "http://4ndv.github.io"
   },
   "dependencies": {
     "jquery": ">=1.8"
