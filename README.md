@@ -3,7 +3,7 @@ Notiny
 
 [![Code Climate](https://codeclimate.com/github/4ndv/notiny/badges/gpa.svg)](https://codeclimate.com/github/4ndv/notiny)
 
-Just a little (only 4.6kb compressed) notifications plugin
+Just a little (only 5.1kb compressed) notifications plugin
 
 ## Usage, demos, options and other
 
@@ -12,6 +12,28 @@ Just a little (only 4.6kb compressed) notifications plugin
 ## Thanks
 
 [Dustin Hayes](https://github.com/dustinhayes)
+
+[Levin Van](https://github.com/mamboer)
+
+## Build
+
+To build Notiny from sources you need to install Gulp
+
+```sh
+$ npm install -g gulp
+```
+
+Then navigate in terminal to downloaded sources and install some required modules
+
+```sh
+$ npm install gulp gulp-uglify gulp-myth gulp-csso gulp-rename gulp-coffee gulp-coffeelint
+```
+
+Then run Gulp
+
+```sh
+$ gulp
+```
 
 ## License info
 
