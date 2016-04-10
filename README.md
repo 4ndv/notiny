@@ -1,19 +1,39 @@
 Notiny
 ========
 
-[![Code Climate](https://codeclimate.com/github/andreyviktorov/notiny/badges/gpa.svg)](https://codeclimate.com/github/andreyviktorov/notiny)
+[![Code Climate](https://codeclimate.com/github/andreyviktorov/notiny/badges/gpa.svg)](https://codeclimate.com/github/4ndv/notiny)
 
 Just a little (only 5.1kb compressed) notifications plugin
 
 ## Usage, demos, options and other
 
-[Visit project's website](http://andreyviktorov.github.io/notiny)
+[Visit project's website](http://4ndv.github.io/notiny)
 
 ## Thanks
 
 [Dustin Hayes](https://github.com/dustinhayes)
 
 [Levin Van](https://github.com/mamboer)
+
+## Build
+
+To build Notiny from sources you need to install Gulp
+
+```sh
+$ npm install -g gulp
+```
+
+Then navigate in terminal to downloaded sources and install some required modules
+
+```sh
+$ npm install gulp gulp-uglify gulp-myth gulp-csso gulp-rename gulp-coffee gulp-coffeelint
+```
+
+Then run Gulp
+
+```sh
+$ gulp
+```
 
 ## License info
 
