@@ -26,7 +26,7 @@
         <p class="ui medium inverted header">
           Just a little (only 5.1kb compressed) notifications plugin
         </p>
-        <a class="ui inverted blue huge button" href="https://github.com/andreyviktorov/notiny/archive/master.zip">Download</a>
+        <a class="ui inverted blue huge button" href="https://github.com/4ndv/notiny/archive/master.zip">Download</a>
         <br />
       </div>
     </div>
@@ -36,9 +36,9 @@
     <div class="ui page grid">
       <div class="column center aligned">
         <div class="addthis_sharing_toolbox"></div>
-        <a href="https://github.com/andreyviktorov" class="github-button">Follow @andreyviktorov</a>
-        <a data-count-api="/repos/andreyviktorov/notiny#stargazers_count" data-count-href="/andreyviktorov/notiny/stargazers" href="https://github.com/andreyviktorov/notiny" class="github-button">Star</a>
-        <a data-count-api="/repos/andreyviktorov/notiny#forks_count" data-count-href="/andreyviktorov/notiny/network" href="https://github.com/andreyviktorov/notiny/fork" class="github-button">Fork</a>
+        <a href="https://github.com/4ndv" class="github-button">Follow @4ndv</a>
+        <a data-count-api="/repos/4ndv/notiny#stargazers_count" data-count-href="/4ndv/notiny/stargazers" href="https://github.com/4ndv/notiny" class="github-button">Star</a>
+        <a data-count-api="/repos/4ndv/notiny#forks_count" data-count-href="/4ndv/notiny/network" href="https://github.com/4ndv/notiny/fork" class="github-button">Fork</a>
       </div>
     </div>
   </div>
@@ -73,6 +73,12 @@
         <h4>Notification with auto width:</h4>
         <pre><code data-language="javascript">$.notiny({ width: 'auto', text: 'Not too long text' });</pre></code>
         <div class="ui blue button" onclick="$.notiny({ width: 'auto', text: 'Not too long text' });">Run</div>
+        <h4>Fluid notification on top:</h4>
+        <pre><code data-language="javascript">$.notiny({ text: "Top Notiny with fluid width", position: 'fluid-top' });</pre></code>
+        <div class="ui blue button" onclick="$.notiny({ text: 'Top Notiny with fluid width', position: 'fluid-top' });">Run</div>
+        <h4>Fluid notification on bottom:</h4>
+        <pre><code data-language="javascript">$.notiny({ text: "Bottom Notiny with fluid width", position: 'fluid-bottom' });</pre></code>
+        <div class="ui blue button" onclick="$.notiny({ text: 'Bottom Notiny with fluid width', position: 'fluid-bottom' });">Run</div>
       </div>
     </div>
   </div>
@@ -85,7 +91,7 @@
         <pre><code data-language="javascript">{
   // Image path (http/base64)
   image: undefined,
-  // Position on screen, values: right-bottom, right-top, left-bottom, left-top
+  // Position on screen, values: right-bottom, right-top, left-bottom, left-top, fluid-top, fluid-bottom
   position: 'right-bottom',
   // Theme
   theme: 'dark',
@@ -199,34 +205,11 @@
     </div>
   </div>
 
-  <div class="ui vertical segment">
-    <div class="ui page grid">
-      <div class="column">
-        <h1>Build</h1>
-        <p>
-          To build Notiny from sources you need to install Gulp
-        </p>
-        <pre><code data-language="shell">$ npm install gulp -g</code></pre>
-        <p>
-          Then navigate in terminal to downloaded sources and install some required modules
-        </p>
-        <pre><code data-language="shell">$ npm install gulp gulp-uglify gulp-myth gulp-csso gulp-rename</code></pre>
-        <p>
-          Then run Gulp
-        </p>
-        <pre><code data-language="shell">$ gulp</code></pre>
-        <p>
-          You can take compressed and optimized files from <b>dist</b> folder
-        </p>
-      </div>
-    </div>
-  </div>
-
   <div class="ui inverted black vertical segment">
     <div class="ui page grid">
       <div class="column">
         <p>
-          Created by <a href="http://andreyviktorov.github.io">Andrey Viktorov</a>, 2015
+          Created by <a href="http://4ndv.github.io">Andrey Viktorov</a>, 2015
           <br />From russia with <3
           <br />
           <br />Site built with awesome <a href="http://semantic-ui.com">Semantic UI</a>
